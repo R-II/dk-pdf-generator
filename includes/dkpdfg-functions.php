@@ -134,6 +134,8 @@ function dkpdfg_output_pdf() {
 		$mpdf->Output( 'dk-pdf-generator.pdf', 'D' ); 
 
 	}
+
+
 }
 
 /**
@@ -419,5 +421,42 @@ function dkpdfg_after_support() { ?>
 		</div>
 <?php }
 add_action( 'dkpdf_after_support', 'dkpdfg_after_support' );
+
+/**
+* set query_vars
+*/
+function dkpdfg_set_query_vars( $query_vars ) {
+  $query_vars[] = 'pdfg';
+  return $query_vars;
+}
+add_filter( 'query_vars', 'dkpdfg_set_query_vars' );
+
+/**
+* output the pdf
+*/
+function dkpdfg_frontend_pdf( $query ) {
+
+  // TODO sanitize validate...
+  $pdfg = get_query_var( 'pdfg' );
+
+  if( $pdfg ) {
+
+		// include mPDF library from DK PDF
+		include( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' );
+
+		$mpdf = new mPDF();
+
+		// Write some HTML code:
+
+		$mpdf->WriteHTML('Hello World');
+
+		// Output a PDF file directly to the browser
+		$mpdf->Output();
+
+  } 
+
+}
+
+add_action( 'wp', 'dkpdfg_frontend_pdf' );
 
 

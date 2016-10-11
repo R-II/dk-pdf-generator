@@ -8,7 +8,9 @@
 */ 
 ?>
 <div class="dkpdf-button-container">
-	<a class="dkpdf-button" href="" target="_blank"><span class="dkpdf-button-icon"><i class="fa fa-file-pdf-o"></i></span> PDF Text</a>
+	<a class="dkpdf-button" href="<?php echo esc_url( add_query_arg( 'pdfg', 123 ) );?>" target="_blank">
+		<span class="dkpdf-button-icon"><i class="fa fa-file-pdf-o"></i></span> PDFG Text
+	</a>
 </div>
 
 
