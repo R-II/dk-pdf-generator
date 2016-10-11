@@ -75,6 +75,9 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 			// templates 
 			require_once DKPDFG_PLUGIN_DIR . 'includes/class-dkpdfg-template-loader.php';
 
+			// shortcodes
+			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-shortcodes.php';
+
 		}
 
 		public function __clone() {
