@@ -7,12 +7,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 * DK PDF filters: dkpdf_hide_button_isset, dkpdf_hide_button_equal
 */
 function dkpdfg_hide_button_isset() {
-	return isset( $_POST['dkpdfg_action_create'] ) || isset( $_POST['dkpdfg_action_create_categories'] );
+	return isset( $_POST['dkpdfg_action_create'] ) || isset( $_POST['dkpdfg_action_create_categories'] ) || isset( $_GET['pdfg'] );
 }
 add_filter( 'dkpdf_hide_button_isset', 'dkpdfg_hide_button_isset' );
 
 function dkpdfg_hide_button_equal() {
-	return $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' || $_POST['dkpdfg_action_create_categories'] == 'dkpdfg_action_create_categories';
+	return $_POST['dkpdfg_action_create'] == 'dkpdfg_action_create' || $_POST['dkpdfg_action_create_categories'] == 'dkpdfg_action_create_categories' || $_GET['pdfg'] == 'frontend';
 }
 add_filter( 'dkpdf_hide_button_equal', 'dkpdfg_hide_button_equal' );
 
@@ -134,7 +134,6 @@ function dkpdfg_output_pdf() {
 		$mpdf->Output( 'dk-pdf-generator.pdf', 'D' ); 
 
 	}
-
 
 }
 
@@ -426,37 +425,49 @@ add_action( 'dkpdf_after_support', 'dkpdfg_after_support' );
 * set query_vars
 */
 function dkpdfg_set_query_vars( $query_vars ) {
-  $query_vars[] = 'pdfg';
-  return $query_vars;
+  	$query_vars[] = 'pdfg';
+  	return $query_vars;
 }
 add_filter( 'query_vars', 'dkpdfg_set_query_vars' );
 
 /**
-* output the pdf
+* output the pdf in frontend
 */
 function dkpdfg_frontend_pdf( $query ) {
 
-  // TODO sanitize validate...
-  $pdfg = get_query_var( 'pdfg' );
+  	$pdfg = sanitize_text_field( get_query_var( 'pdfg' ) );
 
-  if( $pdfg ) {
-
-		// include mPDF library from DK PDF
-		include( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' );
-
-		$mpdf = new mPDF();
-
-		// Write some HTML code:
-
-		$mpdf->WriteHTML('Hello World');
-
-		// Output a PDF file directly to the browser
-		$mpdf->Output();
-
-  } 
+  	if( !empty( $pdfg ) && $pdfg == 'frontend' ) {
+  		add_filter( 'the_content', 'dkpdfg_hide_pdf_button' );
+		dkpdfg_output_pdf();
+	} 
 
 }
-
 add_action( 'wp', 'dkpdfg_frontend_pdf' );
+
+/**
+* remove dkpdfg-button shortcode in PDF
+*/
+function dkpdfg_hide_pdf_button( $content ) {
+	remove_shortcode('dkpdfg-button');
+    $content = str_replace( "[dkpdfg-button]", "", $content );
+	return $content; 
+}
+
+/**
+* remove dkpdfg-button shortcode when using DK PDF button 
+*/
+function dkpdfg_hide_pdf_button_dkpdf( $content ) {
+  	$pdf = get_query_var( 'pdf' );
+  	if( $pdf ) {
+		remove_shortcode('dkpdfg-button');
+	    $content = str_replace( "[dkpdfg-button]", "", $content );
+		
+  	}
+  	return $content; 
+}
+add_filter( 'the_content', 'dkpdfg_hide_pdf_button_dkpdf' );
+
+
 
 

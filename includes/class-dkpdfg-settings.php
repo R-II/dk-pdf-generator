@@ -310,6 +310,29 @@ class DKPDFG_Settings {
 			)
 		);
 
+		$settings['dkpdfg_button'] = array(
+			'title'					=> __( 'PDF Button Shortcode', 'dkpdfg' ),
+			'description'			=> 'Use [dkpdfg-button] inside your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
+			'fields'				=> array(				
+				array(
+					'id' 			=> 'pdfgbutton_text',
+					'label'			=> __( 'Button text' , 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'text',
+					'default'		=> 'PDF Button',
+					'placeholder'	=> ''
+				),
+				array(
+					'id' 			=> 'pdfgbutton_align',
+					'label'			=> __( 'Align', 'dkpdf' ),
+					'description'	=> '',
+					'type'			=> 'radio',
+					'options'		=> array( 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' ),
+					'default'		=> 'right'
+				),	
+			)
+		);
+
 		$settings = apply_filters( 'dkpdfg' . '_settings_fields', $settings );
 
 		return $settings;
