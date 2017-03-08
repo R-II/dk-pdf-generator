@@ -1,11 +1,11 @@
-<?php 
+<?php
 /**
 * dkpdfg-index.php
 * This template is used to display the content in the PDF
 *
-* Do not edit this template directly, 
-* copy this template and paste in your theme (or child theme) inside a directory named dkpdfg 
-*/ 
+* Do not edit this template directly,
+* copy this template and paste in your theme (or child theme) inside a directory named dkpdfg
+*/
 ?>
 
 <html>
@@ -21,16 +21,16 @@
       		}
 
       		h1 {font-size:140%;}
-      		h2 {font-size:120%;}	
-      		h3 {font-size:110%;}	
+      		h2 {font-size:120%;}
+      		h3 {font-size:110%;}
       		h4 {font-size:100%;}
-      		h5 {font-size:90%;}	
-      		h6 {font-size:80%;}	
+      		h5 {font-size:90%;}
+      		h6 {font-size:80%;}
 
-			<?php if ( is_plugin_active( 'dk-pdf/dk-pdf.php' ) ) { 
+			<?php if ( is_plugin_active( 'dk-pdf/dk-pdf.php' ) ) {
 				$css = get_option( 'dkpdf_pdf_custom_css', '' );
 				echo $css;
-			} ?>			
+			} ?>
 
 		</style>
 
@@ -48,7 +48,7 @@
 				// get posts types
 				$post_types = dkpdf_get_post_types();
 
-				// count posts 
+				// count posts
 				$count = 0;
 				$count_selected = count( $dkpdfg_selected_posts ) - 2;
 
@@ -59,7 +59,7 @@
 						'post_status' => 'publish',
 						'posts_per_page' => -1,
 						'post__in' => $dkpdfg_selected_posts,
-						'orderby' => 'post__in'		
+						'orderby' => 'post__in'
 					);
 
 					$the_query = new WP_Query( apply_filters( 'dkpdfg_index_args', $args ) );
@@ -68,18 +68,18 @@
 
 					   	while ( $the_query->have_posts() ) {
 					        $the_query->the_post(); ?>
-					        
+
 					        <h1><?php the_title();?></h1>
 					        <?php the_content();?>
 
 					        <?php
-					        	// adds a pagebreak for getting post titles at the begining of each page 
+					        	// adds a pagebreak for getting post titles at the begining of each page
 					        	// removes the last blank page in the PDF.
 					        	if( $count <= $count_selected ) { ?>
 
 						        	<pagebreak />
 
-					        <?php } 		       
+					        <?php }
 
 					        $count++;
 
@@ -87,13 +87,13 @@
 
 					<?php }
 
-					} 
+					}
 
 					wp_reset_postdata();
 
 				}
 
-			} 
+			}
 
 			// get categories - since 1.3
 			$dkpdfg_selected_categories = get_option( 'dkpdfg_selected_categories', array() );
@@ -105,25 +105,41 @@
 				<?php }
 
 				$date_from = get_option( 'dkpdfg_date_from', date( 'Y-m-d', strtotime("-1 month")) );
-				$date_to = get_option( 'dkpdfg_date_to', date( 'Y-m-d', current_time( 'timestamp', 1 )) );				
+				$date_to = get_option( 'dkpdfg_date_to', date( 'Y-m-d', current_time( 'timestamp', 1 )) );
 
-				$args = array(
-					'post_type' => 'post',
-					'post_status' => 'publish',
-					'posts_per_page' => -1,
-					'cat' => $dkpdfg_selected_categories,
-					'date_query' => array(
-						array(
-							'after'     => $date_from,
-							'before'    => $date_to,
-							'inclusive' => true,
-						),
-					),
-				);
+        $args = array(
+    			 'public'   => true,
+    		);
+    		$post_types = get_post_types( $args );
+
+        $tax_query = array( 'relation' => 'OR' );
+
+    		foreach ( $post_types  as $post_type ) {
+    			$taxonomy_names = get_object_taxonomies( $post_type );
+    			foreach ( $taxonomy_names as $taxonomy_name ) {
+            $tax_query[] = array(
+                'taxonomy' => $taxonomy_name,
+                'field'    => 'term_id',
+                'terms'    => $dkpdfg_selected_categories,
+            );
+    			}
+    		}
+        $tax_query[] = array(
+          'taxonomy' => 'category',
+          'field'    => 'term_id',
+          'terms'    => $dkpdfg_selected_categories,
+        );
+
+        $args = array(
+          'post_type' => $post_types,
+          'post_status' => 'publish',
+          'posts_per_page' => -1,
+          'tax_query' => $tax_query,
+        );
 
 				$the_query = new WP_Query( $args );
 
-				// count posts 
+				// count posts
 				$count2 = 0;
 				$count_selected2 = $the_query->post_count - 2;
 
@@ -136,27 +152,27 @@
 					        <?php the_content();?>
 
 					        <?php
-					        	// adds a pagebreak for getting post titles at the begining of each page 
+					        	// adds a pagebreak for getting post titles at the begining of each page
 					        	// removes the last blank page in the PDF.
 					        	if( $count2 <= $count_selected2 ) { ?>
 
 						        	<pagebreak />
 
-					        <?php } 		       
+					        <?php }
 
 					        $count2++;
-					        
-					        ?>					     
+
+					        ?>
 
 				<?php }
 
-				} 
+				}
 
-				wp_reset_postdata();			
+				wp_reset_postdata();
 
 			}
 
-		?>		
+		?>
 
     </body>
 

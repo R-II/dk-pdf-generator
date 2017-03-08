@@ -17,7 +17,7 @@ function dkpdfg_hide_button_equal() {
 add_filter( 'dkpdf_hide_button_equal', 'dkpdfg_hide_button_equal' );
 
 /**
-* select posts create PDF 
+* select posts create PDF
 */
 function dkpdfg_select_posts_button() {
 	// check if dk-pdf plugin is active
@@ -36,7 +36,7 @@ function dkpdfg_select_posts_button() {
 add_action( 'admin_init', 'dkpdfg_select_posts_button' );
 
 /**
-* select categories create PDF 
+* select categories create PDF
 */
 function dkpdfg_select_categories_button() {
 	// check if dk-pdf plugin is active
@@ -65,13 +65,13 @@ function dkpdfg_output_pdf() {
 	// page orientation
 	$dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
 
-	if ( $dkpdf_page_orientation == 'horizontal') {		                  
+	if ( $dkpdf_page_orientation == 'horizontal') {
 		$format = 'A4-L';
 	} else {
 		$format = 'A4';
 	}
 
-	// font size 
+	// font size
 	$dkpdf_font_size = get_option( 'dkpdf_font_size', '12' );
 	$dkpdf_font_family = '';
 
@@ -82,11 +82,11 @@ function dkpdfg_output_pdf() {
 	$dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
 	$dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
 
-	// creating and setting the pdf 
-	$mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family, 
-		$dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header 
+	// creating and setting the pdf
+	$mpdf = new mPDF('utf-8', $format, $dkpdf_font_size, $dkpdf_font_family,
+		$dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
 	);
-		
+
     // write cover
     $dkpdf_show_cover = get_option( 'dkpdfg_show_cover', 'on' );
 
@@ -104,34 +104,34 @@ function dkpdfg_output_pdf() {
 
 		$mpdf->WriteHTML('<tocpagebreak toc-preHTML="&lt;h2&gt;'. $toc_title .'&lt;/h2&gt;"  paging="on" links="on" resetpagenum="1" toc-odd-footer-value="-1" toc-odd-header-value="-1" />');
 		$mpdf->h2toc = array( 'H1'=>0 );
-		$mpdf->h2bookmarks = array( 'H1'=>0 );	
+		$mpdf->h2bookmarks = array( 'H1'=>0 );
 
-	}		
-				
-	// header 
+	}
+
+	// header
 	$pdf_header_html = dkpdf_get_template( 'dkpdf-header' );
 	$mpdf->SetHTMLHeader( $pdf_header_html, 'O', TRUE );
 
-    // footer      
+    // footer
     $pdf_footer_html = dkpdf_get_template( 'dkpdf-footer' );
     $mpdf->SetHTMLFooter( $pdf_footer_html );
-			
-	// write content 
-	$mpdf->WriteHTML( dkpdfg_get_template( 'dkpdfg-index' ) ); 
-				
+
+	// write content
+	$mpdf->WriteHTML( dkpdfg_get_template( 'dkpdfg-index' ) );
+
 	// output PDF
 	//$mpdf->Output();
-	//$mpdf->Output( 'dk-pdf-generator.pdf', 'D' ); 
+	//$mpdf->Output( 'dk-pdf-generator.pdf', 'D' );
 
-	$cover_title = get_option( 'dkpdfg_cover_title', '' );			
-				
+	$cover_title = get_option( 'dkpdfg_cover_title', '' );
+
 	if( $cover_title != '' ) {
 
-		$mpdf->Output( $cover_title . '.pdf', 'D' ); 
+		$mpdf->Output( $cover_title . '.pdf', 'D' );
 
 	} else {
 
-		$mpdf->Output( 'dk-pdf-generator.pdf', 'D' ); 
+		$mpdf->Output( 'dk-pdf-generator.pdf', 'D' );
 
 	}
 
@@ -183,7 +183,7 @@ add_action('wp_ajax_dkpdfg_search_posts', 'dkpdfg_search_posts' );
 //add_action('wp_ajax_nopriv_dkpdfg_search_posts', 'dkpdfg_search_posts' );
 
 /**
-* Update dkpdfg_selected_posts option 
+* Update dkpdfg_selected_posts option
 * $ids array of post ids
 */
 function dkpdfg_update_selected_posts() {
@@ -208,7 +208,7 @@ function dkpdfg_update_selected_posts() {
 
     $result = json_encode( $result );
 	echo $result;
-	wp_die(); 
+	wp_die();
 
 }
 
@@ -216,16 +216,16 @@ add_action( 'wp_ajax_update_selected_posts', 'dkpdfg_update_selected_posts' );
 //add_action( 'wp_ajax_nopriv_update_selected_posts', 'dkpdfg_update_selected_posts' );
 
 /**
-* get dkpdfg_selected_posts option values 
+* get dkpdfg_selected_posts option values
 */
 function dkpdfg_get_selected_posts() {
 
 	$post_types = dkpdf_get_post_types();
-	
+
 	$dkpdfg_selected_posts = get_option( 'dkpdfg_selected_posts', array() );
 	$rows = array();
 
-	if( !empty( $dkpdfg_selected_posts ) ) {			
+	if( !empty( $dkpdfg_selected_posts ) ) {
 
 		foreach ( $post_types as $post_type ) {
 
@@ -234,7 +234,7 @@ function dkpdfg_get_selected_posts() {
 				'post_status' => 'publish',
 				'posts_per_page' => -1,
 				'post__in' => $dkpdfg_selected_posts,
-				'orderby' => 'post__in'			
+				'orderby' => 'post__in'
 			);
 
 			$the_query = new WP_Query( $args );
@@ -249,7 +249,7 @@ function dkpdfg_get_selected_posts() {
 
 				}
 
-			} 
+			}
 
 			wp_reset_postdata();
 
@@ -281,12 +281,30 @@ function dkpdfg_search_categories() {
 
 	if( isset( $_POST['name'] ) ) {
 
-		$categories = get_categories(); 
-	    foreach ( $categories as $category ) {
-		    $title = $category->cat_name;
-		   	$id = $category->term_id;
-		    $rows[] = "{ \"name\": \"$title\", \"id\": \"$id\" }";
-	    }
+		$categories = get_categories();
+	  foreach ( $categories as $category ) {
+		   $title = $category->cat_name;
+		   $id = $category->term_id;
+		   $rows[] = "{ \"name\": \"$title\", \"id\": \"$id\" }";
+	  }
+
+		$args = array(
+			 'public'   => true,
+			 '_builtin' => false
+		);
+		$post_types = get_post_types( $args );
+
+		foreach ( $post_types  as $post_type ) {
+			$taxonomy_names = get_object_taxonomies( $post_type );
+			foreach ( $taxonomy_names as $taxonomy_name ) {
+				$terms = get_terms( $taxonomy_name );
+				foreach ( $terms as $term ) {
+					$title = $term->name;
+					$id = $term->term_id;
+					$rows[] = "{ \"name\": \"$title\", \"id\": \"$id\" }";
+				}
+			}
+		}
 
 		// output to the browser
 		header('Content-Type: text/javascript; charset=UTF-8');
@@ -298,8 +316,9 @@ function dkpdfg_search_categories() {
 }
 add_action('wp_ajax_dkpdfg_search_categories', 'dkpdfg_search_categories' );
 
+
 /**
-* Update dkpdfg_selected_categories option 
+* Update dkpdfg_selected_categories option
 * $ids array of categories ids
 */
 function dkpdfg_update_selected_categories() {
@@ -322,16 +341,16 @@ function dkpdfg_update_selected_categories() {
 
     $result = json_encode( $result );
 	echo $result;
-	wp_die(); 
+	wp_die();
 
 }
 add_action( 'wp_ajax_update_selected_categories', 'dkpdfg_update_selected_categories' );
 
 /**
-* get dkpdfg_selected_categories option values 
+* get dkpdfg_selected_categories option values
 */
 function dkpdfg_get_selected_categories() {
-	
+
 	$dkpdfg_selected_categories = get_option( 'dkpdfg_selected_categories', array() );
 	$rows = array();
 
@@ -340,6 +359,11 @@ function dkpdfg_get_selected_categories() {
 		foreach ($dkpdfg_selected_categories as $key ) {
 			$category = get_category( $key );
 			array_push( $rows, array( $category->term_id, $category->name ) );
+		}
+
+		foreach ($dkpdfg_selected_categories as $key ) {
+			$term = get_term( $key );
+			array_push( $rows, array( $term->term_id, $term->name ) );
 		}
 
 		$result['type'] = 'success';
@@ -361,12 +385,12 @@ function dkpdfg_get_selected_categories() {
 add_action( 'wp_ajax_get_selected_categories', 'dkpdfg_get_selected_categories' );
 
 /**
-* updates dkpdfg_date_from and dkpdfg_date_to options 
+* updates dkpdfg_date_from and dkpdfg_date_to options
 */
 function dkpdfg_update_date_ranges() {
 
 	if ( isset( $_POST['date_from'] ) && isset( $_POST['date_to'] ) ) {
-		// TODO sanitize 
+		// TODO sanitize
 		update_option( 'dkpdfg_date_from', $_POST['date_from'] );
 		update_option( 'dkpdfg_date_to', $_POST['date_to'] );
 		$result['type'] = 'success';
@@ -378,7 +402,7 @@ function dkpdfg_update_date_ranges() {
 	}
     $result = json_encode( $result );
 	echo $result;
-	wp_die(); 
+	wp_die();
 
 }
 add_action( 'wp_ajax_update_date_ranges', 'dkpdfg_update_date_ranges' );
@@ -387,15 +411,15 @@ add_action( 'wp_ajax_update_date_ranges', 'dkpdfg_update_date_ranges' );
 /**
 * returs a template
 * @param string template name
-* @return string 
-*/ 
+* @return string
+*/
 function dkpdfg_get_template( $template_name ) {
-    
+
     $template = new DKPDFG_Template_Loader;
 
     ob_start();
     $template->get_template_part( $template_name );
-    return ob_get_clean();   
+    return ob_get_clean();
 
 }
 
@@ -406,13 +430,13 @@ function dkpdfg_after_support() { ?>
 		<div class="wrap">
 			<h2 style="margin-top:20px;float:left;width:100%;">DK PDF Generator Support</h2>
 
-			<div class="dkpdf-item">			
+			<div class="dkpdf-item">
 				<h3>Documentation</h3>
 				<p>Everything you need to know for getting DK PDF Generator up and running.</p>
 				<p><a href="http://wp.dinamiko.com/demos/dkpdf-generator/documentation/" target="_blank">Go to Documentation</a></p>
 			</div>
 
-			<div class="dkpdf-item">			
+			<div class="dkpdf-item">
 				<h3>Support</h3>
 				<p>Having trouble? don't worry, create a new commnet in CodeCanyon item section.</p>
 				<p><a href="http://codecanyon.net/item/dk-pdf-generator/13530581/comments" target="_blank">Go to Support</a></p>
@@ -440,7 +464,7 @@ function dkpdfg_frontend_pdf( $query ) {
   	if( !empty( $pdfg ) && $pdfg == 'frontend' ) {
   		add_filter( 'the_content', 'dkpdfg_hide_pdf_button' );
 		dkpdfg_output_pdf();
-	} 
+	}
 
 }
 add_action( 'wp', 'dkpdfg_frontend_pdf' );
@@ -451,23 +475,19 @@ add_action( 'wp', 'dkpdfg_frontend_pdf' );
 function dkpdfg_hide_pdf_button( $content ) {
 	remove_shortcode('dkpdfg-button');
     $content = str_replace( "[dkpdfg-button]", "", $content );
-	return $content; 
+	return $content;
 }
 
 /**
-* remove dkpdfg-button shortcode when using DK PDF button 
+* remove dkpdfg-button shortcode when using DK PDF button
 */
 function dkpdfg_hide_pdf_button_dkpdf( $content ) {
   	$pdf = get_query_var( 'pdf' );
   	if( $pdf ) {
 		remove_shortcode('dkpdfg-button');
 	    $content = str_replace( "[dkpdfg-button]", "", $content );
-		
+
   	}
-  	return $content; 
+  	return $content;
 }
 add_filter( 'the_content', 'dkpdfg_hide_pdf_button_dkpdf' );
-
-
-
-
