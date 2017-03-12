@@ -72,7 +72,15 @@
 					        $the_query->the_post(); ?>
 
 					        <h1><?php the_title();?></h1>
-					        <?php the_content();?>
+
+					        <?php //the_content();?>
+                  <?php
+                      // removes more tag and shows all post content in the PDF
+                      global $post;
+                      $unfiltered_content = str_replace( '<!--more-->', '', $post->post_content );
+                      $filtered_content = apply_filters( 'the_content', $unfiltered_content );
+                      echo $filtered_content;
+                  ?>
 
 					        <?php
 					        	// adds a pagebreak for getting post titles at the begining of each page
@@ -151,7 +159,15 @@
 				        $the_query->the_post(); ?>
 
 					        <h1><?php the_title();?></h1>
-					        <?php the_content();?>
+
+					        <?php //the_content();?>
+                  <?php
+                      // removes more tag and shows all post content in the PDF
+                      global $post;
+                      $unfiltered_content = str_replace( '<!--more-->', '', $post->post_content );
+                      $filtered_content = apply_filters( 'the_content', $unfiltered_content );
+                      echo $filtered_content;
+                  ?>
 
 					        <?php
 					        	// adds a pagebreak for getting post titles at the begining of each page
