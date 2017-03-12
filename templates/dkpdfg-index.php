@@ -27,10 +27,12 @@
       		h5 {font-size:90%;}
       		h6 {font-size:80%;}
 
-			<?php if ( is_plugin_active( 'dk-pdf/dk-pdf.php' ) ) {
-				$css = get_option( 'dkpdf_pdf_custom_css', '' );
-				echo $css;
-			} ?>
+			<?php
+        if ( function_exists( 'dkpdf_get_post_types' ) ) {
+          $css = get_option( 'dkpdf_pdf_custom_css', '' );
+          echo $css;
+        }
+      ?>
 
 		</style>
 

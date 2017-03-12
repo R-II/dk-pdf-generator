@@ -24,7 +24,7 @@ class DKPDFG_Settings {
 
 		// Add DK PDF Generator page to DK PDF admin menu
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ), 20 );
-	
+
 	}
 
 	/**
@@ -35,13 +35,13 @@ class DKPDFG_Settings {
 
 		$this->settings = $this->settings_fields();
 
-		// create an option for selected posts 
+		// create an option for selected posts
 		add_option( 'dkpdfg_selected_posts', array() );
 
-		// create an option for selected post categories 
+		// create an option for selected post categories
 		add_option( 'dkpdfg_selected_categories', array() );
 
-		// create options for date ranges (select post categories) 
+		// create options for date ranges (select post categories)
 		add_option( 'dkpdfg_date_from', date( 'Y-m-d', strtotime("-1 month")) );
 		add_option( 'dkpdfg_date_to', date( 'Y-m-d', current_time( 'timestamp', 1 )) );
 	}
@@ -55,8 +55,8 @@ class DKPDFG_Settings {
 		if ( is_plugin_active( 'dk-pdf/dk-pdf.php' ) ) {
 
 			$page = add_submenu_page( 'dkpdf' . '_settings', 'DK PDF Generator', 'DK PDF Generator', 'manage_options', 'dkpdf-gtool', array( $this, 'dkpdf_gtool_screen' ) );
-			add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );			
-		
+			add_action( 'admin_print_styles-' . $page, array( $this, 'settings_assets' ) );
+
 		}
 
 	}
@@ -81,7 +81,7 @@ class DKPDFG_Settings {
 						  $html .= '</select>';
 						$html .= '</div>';
 
-						// create pdf button 
+						// create pdf button
 						$html .= '<form style="width:100%;float:left;margin-top:15px;margin-bottom:25px;" id="dkpdfg-create-pdf" method="post">';
 							$html .= '<input id="dkpdfg-create-button" type="submit" class="button-primary" disabled value="'. esc_attr( __( 'Create PDF' , 'dkpdfg' ) ) . '"/>';
 							$html .= wp_nonce_field( 'dkpdfg_create_pdf_action', 'dkpdfg_create_pdf_nonce_field' );
@@ -91,10 +91,10 @@ class DKPDFG_Settings {
 						$html .= '<hr>';
 
 						// select categories
-						$html .= '<h3 style="margin-bottom:0px;">'. __('Select posts categories', 'dkpdfg').'</h3>';
+						$html .= '<h3 style="margin-bottom:0px;">'. __('Select posts categories and taxonomy terms', 'dkpdfg').'</h3>';
 						$html .= '<div style="width:100%;float:left;text-align:right;padding-bottom:5px;"><a id="dkpdfg-categories-clearoptions" href="#">Clear all</a></div>';
 						$html .= '<div style="width:100%;float:left;" class="control-group">';
-						  $html .= '<select style="width:100%;"id="dkpdfg-search-categories" multiple class="dkpdf-categories-controller" placeholder="'. __('Search by category name', 'dkpdfg').'">';
+						  $html .= '<select style="width:100%;"id="dkpdfg-search-categories" multiple class="dkpdf-categories-controller" placeholder="'. __('Search by category name or taxonomy term', 'dkpdfg').'">';
 						  $html .= '</select>';
 						$html .= '</div>';
 
@@ -105,7 +105,7 @@ class DKPDFG_Settings {
 						$html .= '<input class="dkpdfg-dates" type="text" id="dkpdfg-date-from" name="dkpdfg-date-from" value="'. $date_from .'"/>';
 						$html .= '<input class="dkpdfg-dates" type="text" id="dkpdfg-date-to" name="dkpdfg-date-top" value="'. $date_to .'"/>';
 
-						// create categories pdf button 
+						// create categories pdf button
 						$html .= '<form style="width:100%;float:left;margin-top:15px;margin-bottom:25px;" id="dkpdfg-create-categories-pdf" method="post">';
 							$html .= '<input id="dkpdfg-create-categories-button" type="submit" class="button-primary" disabled value="'. esc_attr( __( 'Create PDF' , 'dkpdfg' ) ) . '"/>';
 							$html .= wp_nonce_field( 'dkpdfg_create_categories_pdf_action', 'dkpdfg_create_categories_pdf_nonce_field' );
@@ -168,7 +168,7 @@ class DKPDFG_Settings {
 							$html .= ob_get_clean();
 
 							$html .= '<p class="submit">' . "\n";
-								$html .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";						
+								$html .= '<input type="hidden" name="tab" value="' . esc_attr( $tab ) . '" />' . "\n";
 								$html .= '<input name="dkpdfg-save" type="submit" class="button-primary" value="' . esc_attr( __( 'Save Settings' , 'dkpdfg' ) ) . '" />' . "\n";
 							$html .= '</p>' . "\n";
 
@@ -204,10 +204,10 @@ class DKPDFG_Settings {
     	// We're including the WP media scripts here because they're needed for the image upload field
     	// If you're not including an image upload then you can leave this function call out
     	wp_enqueue_media();
- 	
+
     	wp_register_script( 'dkpdfg' . '-settings-js', plugins_url( 'dk-pdf-generator/assets/js/settings-admin.js' ), array( 'farbtastic', 'jquery' ), '1.0.0' );
-    	wp_enqueue_script( 'dkpdfg' . '-settings-js' );   	
-    	
+    	wp_enqueue_script( 'dkpdfg' . '-settings-js' );
+
 	}
 
 	/**
@@ -230,14 +230,14 @@ class DKPDFG_Settings {
 		$settings['dkpdfg_cover'] = array(
 			'title'					=> __( 'Cover', 'dkpdfg' ),
 			'description'			=> '',
-			'fields'				=> array(				
+			'fields'				=> array(
 				array(
 					'id' 			=> 'show_cover',
 					'label'			=> __( 'Show Cover', 'dkpdfg' ),
 					'description'	=> '',
 					'type'			=> 'checkbox',
 					'default'		=> 'on'
-				),				
+				),
 				array(
 					'id' 			=> 'cover_title',
 					'label'			=> __( 'Title' , 'dkpdfg' ),
@@ -276,14 +276,14 @@ class DKPDFG_Settings {
 					'description'	=> '',
 					'type'			=> 'color',
 					'default'		=> '#000'
-				),	
+				),
 				array(
 					'id' 			=> 'cover_bg_color',
 					'label'			=> __( 'Background color', 'dkpdfg' ),
 					'description'	=> '',
 					'type'			=> 'color',
 					'default'		=> '#FFF'
-				),				
+				),
 
 			)
 		);
@@ -291,7 +291,7 @@ class DKPDFG_Settings {
 		$settings['dkpdfg_toc'] = array(
 			'title'					=> __( 'Table of contents', 'dkpdfg' ),
 			'description'			=> '',
-			'fields'				=> array(				
+			'fields'				=> array(
 				array(
 					'id' 			=> 'show_toc',
 					'label'			=> __( 'Show Table of contents page', 'dkpdfg' ),
@@ -312,14 +312,14 @@ class DKPDFG_Settings {
 
 		$settings['dkpdfg_button'] = array(
 			'title'					=> __( 'PDF Button Shortcode', 'dkpdfg' ),
-			'description'			=> 'Use [dkpdfg-button] inside your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
-			'fields'				=> array(				
+			'description'			=> 'Use [dkpdfg-button] in your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
+			'fields'				=> array(
 				array(
 					'id' 			=> 'pdfgbutton_text',
 					'label'			=> __( 'Button text' , 'dkpdf' ),
 					'description'	=> '',
 					'type'			=> 'text',
-					'default'		=> 'PDF Button',
+					'default'		=> 'PDF Generator Button',
 					'placeholder'	=> ''
 				),
 				array(
@@ -329,7 +329,7 @@ class DKPDFG_Settings {
 					'type'			=> 'radio',
 					'options'		=> array( 'left' => 'Left', 'center' => 'Center', 'right' => 'Right' ),
 					'default'		=> 'right'
-				),	
+				),
 			)
 		);
 

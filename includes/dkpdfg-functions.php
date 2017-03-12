@@ -87,13 +87,13 @@ function dkpdfg_output_pdf() {
 		$dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
 	);
 
-    // write cover
-    $dkpdf_show_cover = get_option( 'dkpdfg_show_cover', 'on' );
+  // write cover
+  $dkpdf_show_cover = get_option( 'dkpdfg_show_cover', 'on' );
 
-    if( $dkpdf_show_cover == 'on' ) {
-	    $pdf_cover = dkpdfg_get_template( 'dkpdfg-cover' );
-	    $mpdf->WriteHTML( $pdf_cover );
-    }
+  if( $dkpdf_show_cover == 'on' ) {
+	   $pdf_cover = dkpdfg_get_template( 'dkpdfg-cover' );
+	   $mpdf->WriteHTML( $pdf_cover );
+  }
 
 	// write TOC
 	$dkpdf_show_toc = get_option( 'dkpdfg_show_toc', 'on' );

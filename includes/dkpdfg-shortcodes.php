@@ -6,12 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 * [dkpdfg-button]
 */
 function dkpdfg_button_shortcode( $atts, $content = null ) {
-
+/*
 	global $dkpdfg_button_atts;
 
 	$dkpdfg_button_atts = shortcode_atts( array(
 		'columns' => '2',
 	), $atts );
+*/
 
 	$template = new DKPDFG_Template_Loader;
 
@@ -23,4 +24,3 @@ function dkpdfg_button_shortcode( $atts, $content = null ) {
 
 }
 add_shortcode( 'dkpdfg-button', 'dkpdfg_button_shortcode' );
-
