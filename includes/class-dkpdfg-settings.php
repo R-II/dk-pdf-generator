@@ -310,6 +310,7 @@ class DKPDFG_Settings {
 			)
 		);
 
+		/*
 		$settings['dkpdfg_button'] = array(
 			'title'					=> __( 'PDF Button Shortcode', 'dkpdfg' ),
 			'description'			=> 'Use [dkpdfg-button] in your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
@@ -332,6 +333,7 @@ class DKPDFG_Settings {
 				),
 			)
 		);
+		*/
 
 		$settings = apply_filters( 'dkpdfg' . '_settings_fields', $settings );
 

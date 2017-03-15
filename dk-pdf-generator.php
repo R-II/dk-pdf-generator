@@ -25,9 +25,9 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 
 				self::$instance->setup_constants();
 
-				add_action( 'plugins_loaded', array( self::$instance, 'dkpdfg_load_textdomain' ) );				
-				
-				self::$instance->includes();	
+				add_action( 'plugins_loaded', array( self::$instance, 'dkpdfg_load_textdomain' ) );
+
+				self::$instance->includes();
 
 			}
 
@@ -37,7 +37,7 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 
 		public function dkpdfg_load_textdomain() {
 
-			load_plugin_textdomain( 'dkpdfg', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' ); 
+			load_plugin_textdomain( 'dkpdfg', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 		}
 
@@ -46,12 +46,12 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 			if ( ! defined( 'DKPDFG_VERSION' ) ) { define( 'DKPDFG_VERSION', '1.4' ); }
 			if ( ! defined( 'DKPDFG_PLUGIN_DIR' ) ) { define( 'DKPDFG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) ); }
 			if ( ! defined( 'DKPDFG_PLUGIN_URL' ) ) { define( 'DKPDFGPLUGIN_URL', plugin_dir_url( __FILE__ ) ); }
-			if ( ! defined( 'DKPDFG_PLUGIN_FILE' ) ) { define( 'DKPDFG_PLUGIN_FILE', __FILE__ ); }			
+			if ( ! defined( 'DKPDFG_PLUGIN_FILE' ) ) { define( 'DKPDFG_PLUGIN_FILE', __FILE__ ); }
 
 		}
 
 		private function includes() {
-			
+
 			if ( is_admin() ) {
 
 				/**
@@ -71,16 +71,16 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 			}
 
 			// css / js
-			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-load-js-css.php';	
+			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-load-js-css.php';
 
 			// functions
 			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-functions.php';
 
-			// templates 
+			// templates
 			require_once DKPDFG_PLUGIN_DIR . 'includes/class-dkpdfg-template-loader.php';
 
 			// shortcodes
-			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-shortcodes.php';
+			// require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-shortcodes.php';
 
 		}
 
