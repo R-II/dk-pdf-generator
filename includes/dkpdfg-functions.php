@@ -45,7 +45,14 @@ add_action( 'admin_init', 'dkpdfg_select_categories_button' );
 function dkpdfg_output_pdf() {
 
 	// include mPDF library from DK PDF
-	include( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' );
+	if ( file_exists( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' ) ) {
+
+		include( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' );
+	} else {
+
+		require_once ABSPATH . '/wp-content/plugins/dk-pdf/vendor/autoload.php';
+		define('_MPDF_TTFONTDATAPATH', sys_get_temp_dir()."/");
+	}
 
 	// page orientation
 	$dkpdf_page_orientation = get_option( 'dkpdf_page_orientation', '' );
