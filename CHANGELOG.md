@@ -2,6 +2,8 @@
 
 ## 1.5
 - mPDF: Load via Composer or manually.
+- Fix Date Range issue in Select posts categories.
+- Fix select Post Tags in Select posts categories.
 
 ## 1.4
 -  Select taxonomy terms with date ranges.
