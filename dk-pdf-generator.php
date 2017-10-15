@@ -1,7 +1,7 @@
 <?php
 /*
   Plugin Name: DK PDF Generator
-  Version: 1.4
+  Version: 1.4.1
   Plugin URI: http://wp.dinamiko.com/demos/dkpdf-generator
   Description: Create PDF documents with your selected posts, pages and custom post types.
   Author: Emili Castells

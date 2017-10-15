@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.5
+## 1.4.1
 - mPDF: Load via Composer or manually.
 - Fix Date Range issue in Select posts categories.
 - Fix select Post Tags in Select posts categories.
