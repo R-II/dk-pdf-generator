@@ -289,7 +289,7 @@ function dkpdfg_search_categories() {
 
 		$tags = get_tags();
 		foreach ( $tags as $tag ) {
-			$title  = $tag->name;
+			$title = preg_replace("/[^ \w]+/", "", $tag->name);
 			$id     = $tag->term_id;
 			$rows[] = "{ \"name\": \"$title\", \"id\": \"$id\" }";
 		}

@@ -1,9 +1,8 @@
 jQuery(document).ready(function($) {
-
 	var ajaxurl = dkpdfg_admin_data.ajaxurl;
 	var selected_posts = [];
 
-	// fires when selectize changes, updates dkpdfg_selected_posts option 
+	// fires when selectize changes, updates dkpdfg_selected_posts option
 	var selectizeOnChange = function( name ) {
 
 		return function() {
@@ -27,13 +26,13 @@ jQuery(document).ready(function($) {
 
 			}
 
-			// updates dkpdfg_selected_posts option 
+			// updates dkpdfg_selected_posts option
 			jQuery.ajax({
 
 				type : 'post',
 				dataType : 'json',
 				url : ajaxurl,
-				data : { 	
+				data : {
 					action: 'update_selected_posts',
 					ids: selected_posts
 				},
@@ -42,7 +41,7 @@ jQuery(document).ready(function($) {
 
 					if( response.type == 'success') {
 
-						console.log('response ok: ' + response.msg);				
+						console.log('response ok: ' + response.msg);
 
 					} else {
 
@@ -52,13 +51,13 @@ jQuery(document).ready(function($) {
 
 				}
 
-			});			
+			});
 
 		};
 
 	};
 
-	// set selectize 
+	// set selectize
 	var select_search_posts = $('#dkpdfg-search-posts').selectize({
 
 		onChange : selectizeOnChange('onChange'),
@@ -98,22 +97,22 @@ jQuery(document).ready(function($) {
 	        item: function( item ) {
 
 	        	return '<div id="' + item.id + '">' + item.name + '</div>';
-		    	
+
 		    }
 	    },
 
 	});
 
-	// adds dkpdfg_selected_posts as selectize items on page load 
+	// adds dkpdfg_selected_posts as selectize items on page load
 	if( $('#dkpdfg-search-posts').length ) {
-		
+
 		setTimeout(function(){
 
 			jQuery.ajax({
 				type : 'post',
 				dataType : 'json',
 				url : ajaxurl,
-				data : { 	
+				data : {
 					action: 'get_selected_posts',
 				},
 				success: function( response ) {
@@ -160,7 +159,7 @@ jQuery(document).ready(function($) {
 
 	}
 
-	// clear options button 
+	// clear options button
 	$('#dkpdfg-clearoptions').on('click', function(e) {
 
 		e.preventDefault();
@@ -174,7 +173,7 @@ jQuery(document).ready(function($) {
 	// select categories - since 1.3
 	var selected_categories = [];
 
-	// fires when selectize changes, updates dkpdfg_selected_categories option and date from/to 
+	// fires when selectize changes, updates dkpdfg_selected_categories option and date from/to
 	var selectizeCategoriesOnChange = function( name ) {
 
 		return function() {
@@ -198,13 +197,13 @@ jQuery(document).ready(function($) {
 
 			}
 
-			// updates dkpdfg_selected_categories option 
+			// updates dkpdfg_selected_categories option
 			jQuery.ajax({
 
 				type : 'post',
 				dataType : 'json',
 				url : ajaxurl,
-				data : { 	
+				data : {
 					action: 'update_selected_categories',
 					ids: selected_categories
 				},
@@ -213,7 +212,7 @@ jQuery(document).ready(function($) {
 
 					if( response.type == 'success') {
 
-						console.log('response ok: ' + response.msg);				
+						console.log('response ok: ' + response.msg);
 
 					} else {
 
@@ -223,13 +222,13 @@ jQuery(document).ready(function($) {
 
 				}
 
-			});			
+			});
 
 		};
 
 	};
 
-	// set selectize 
+	// set selectize
 	var select_search_categories = $('#dkpdfg-search-categories').selectize({
 
 		onChange : selectizeCategoriesOnChange('onChange'),
@@ -269,22 +268,22 @@ jQuery(document).ready(function($) {
 	        item: function( item ) {
 
 	        	return '<div id="' + item.id + '">' + item.name + '</div>';
-		    	
+
 		    }
 	    },
 
 	});
 
-	// adds dkpdfg_selected_categories as selectize items on page load 
+	// adds dkpdfg_selected_categories as selectize items on page load
 	if( $('#dkpdfg-search-categories').length ) {
-		
+
 		setTimeout(function(){
 
 			jQuery.ajax({
 				type : 'post',
 				dataType : 'json',
 				url : ajaxurl,
-				data : { 	
+				data : {
 					action: 'get_selected_categories',
 				},
 				success: function( response ) {
@@ -331,14 +330,14 @@ jQuery(document).ready(function($) {
 
 	}
 
-	// clear options button 
+	// clear options button
 	$('#dkpdfg-categories-clearoptions').on('click', function(e) {
 		e.preventDefault();
 		var control = select_search_categories[0].selectize;
 		control.clearOptions();
 	});
 
-	$('#dkpdfg-date-from').datepicker({	
+	$('#dkpdfg-date-from').datepicker({
         dateFormat : 'yy-mm-dd'
     });
 	$('#dkpdfg-date-to').datepicker({
@@ -349,29 +348,29 @@ jQuery(document).ready(function($) {
 	var date_from = '';
 	var date_to = '';
 
-    $('.dkpdfg-dates').change(function() { 
+    $('.dkpdfg-dates').change(function() {
 
     	date_from = $('#dkpdfg-date-from').val();
     	date_to = $('#dkpdfg-date-to').val();
 
-		// updates dkpdfg_date_from and dkpdfg_date_to options 
+		// updates dkpdfg_date_from and dkpdfg_date_to options
 		jQuery.ajax({
 			type : 'post',
 			dataType : 'json',
 			url : ajaxurl,
-			data : { 	
+			data : {
 				action: 'update_date_ranges',
 				date_from: date_from,
 				date_to : date_to,
 			},
 			success: function( response ) {
 				if( response.type == 'success') {
-					//console.log('response ok: ' + response.msg);				
+					//console.log('response ok: ' + response.msg);
 				} else {
 					//console.log('response ko: ' + response.msg);
 				}
 			}
-		});	
+		});
 
 	});
 
@@ -379,4 +378,3 @@ jQuery(document).ready(function($) {
 });
 
 
-    

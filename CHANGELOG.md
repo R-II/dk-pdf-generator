@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.4.2
+- Fix Categories selection when special characters in titles.
+
 ## 1.4.1
 - mPDF: Load via Composer or manually.
 - Fix Date Range issue in Select posts categories.
