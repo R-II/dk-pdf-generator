@@ -53,6 +53,8 @@ add_action( 'admin_init', 'dkpdfg_select_categories_button' );
  */
 function dkpdfg_output_pdf() {
 
+	set_query_var( 'pdf', 'pdf' );
+
 	// include mPDF library from DK PDF
 	if ( file_exists( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' ) ) {
 
@@ -101,6 +103,20 @@ function dkpdfg_output_pdf() {
 			'margin_bottom'     => $dkpdf_margin_bottom,
 			'margin_header'     => $dkpdf_margin_header,
 		] );
+	}
+
+	// encrypts and sets the PDF document permissions
+	// https://mpdf.github.io/reference/mpdf-functions/setprotection.html
+	$enable_protection = get_option( 'dkpdf_enable_protection' );
+	if( $enable_protection == 'on' ) {
+		$grant_permissions = get_option( 'dkpdf_grant_permissions' );
+		$mpdf->SetProtection( $grant_permissions );
+	}
+
+	// keep columns
+	$keep_columns = get_option( 'dkpdf_keep_columns' );
+	if( $keep_columns == 'on' ) {
+		$mpdf->keepColumns = true;
 	}
 
 	// write cover
