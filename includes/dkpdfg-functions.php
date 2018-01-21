@@ -83,17 +83,25 @@ function dkpdfg_output_pdf() {
 	$dkpdf_margin_bottom = get_option( 'dkpdf_margin_bottom', '30' );
 	$dkpdf_margin_header = get_option( 'dkpdf_margin_header', '15' );
 
-	// creating and setting the pdf
-	$mpdf = new \Mpdf\Mpdf( [
-		'tempDir'           => realpath( __DIR__ . '/..' ) . '/tmp',
-		'default_font_size' => $dkpdf_font_size,
-		'format'            => $format,
-		'margin_left'       => $dkpdf_margin_left,
-		'margin_right'      => $dkpdf_margin_right,
-		'margin_top'        => $dkpdf_margin_top,
-		'margin_bottom'     => $dkpdf_margin_bottom,
-		'margin_header'     => $dkpdf_margin_header,
-	] );
+	// Instance mPDF 6.0 and below
+	if ( file_exists( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' ) ) {
+
+		$mpdf = new mPDF( 'utf-8', $format, $dkpdf_font_size, $dkpdf_font_family,
+			$dkpdf_margin_left, $dkpdf_margin_right, $dkpdf_margin_top, $dkpdf_margin_bottom, $dkpdf_margin_header
+		);
+	} else {
+
+		$mpdf = new \Mpdf\Mpdf( [
+			'tempDir'           => realpath( __DIR__ . '/..' ) . '/tmp',
+			'default_font_size' => $dkpdf_font_size,
+			'format'            => $format,
+			'margin_left'       => $dkpdf_margin_left,
+			'margin_right'      => $dkpdf_margin_right,
+			'margin_top'        => $dkpdf_margin_top,
+			'margin_bottom'     => $dkpdf_margin_bottom,
+			'margin_header'     => $dkpdf_margin_header,
+		] );
+	}
 
 	// write cover
 	$dkpdf_show_cover = get_option( 'dkpdfg_show_cover', 'on' );
