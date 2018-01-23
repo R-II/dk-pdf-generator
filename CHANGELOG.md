@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.5.0
+- Add PDF button shortcode.
 - Add support for DK PDF 1.9.6.
 - Add support for columns and remove DK PDF shortcodes. 
 - Add support for DK PDF protection.
