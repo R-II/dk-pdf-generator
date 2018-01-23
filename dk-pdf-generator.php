@@ -80,7 +80,7 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 			require_once DKPDFG_PLUGIN_DIR . 'includes/class-dkpdfg-template-loader.php';
 
 			// shortcodes
-			// require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-shortcodes.php';
+			require_once DKPDFG_PLUGIN_DIR . 'includes/dkpdfg-shortcodes.php';
 
 		}
 

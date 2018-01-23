@@ -310,17 +310,16 @@ class DKPDFG_Settings {
 			)
 		);
 
-		/*
 		$settings['dkpdfg_button'] = array(
 			'title'					=> __( 'PDF Button Shortcode', 'dkpdfg' ),
-			'description'			=> 'Use [dkpdfg-button] in your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
+			'description'			=> 'Use [dkpdfg-button] inside your content or in your templates via echo do_shortcode("[dkpdfg-button]");',
 			'fields'				=> array(
 				array(
 					'id' 			=> 'pdfgbutton_text',
 					'label'			=> __( 'Button text' , 'dkpdf' ),
 					'description'	=> '',
 					'type'			=> 'text',
-					'default'		=> 'PDF Generator Button',
+					'default'		=> 'PDF Button',
 					'placeholder'	=> ''
 				),
 				array(
@@ -333,7 +332,6 @@ class DKPDFG_Settings {
 				),
 			)
 		);
-		*/
 
 		$settings = apply_filters( 'dkpdfg' . '_settings_fields', $settings );
 
