@@ -93,8 +93,18 @@ function dkpdfg_output_pdf() {
 		);
 	} else {
 
+		// fonts
+		$mpdf_default_config = (new Mpdf\Config\ConfigVariables())->getDefaults();
+		$dkpdf_mpdf_font_dir = apply_filters('dkpdf_mpdf_font_dir',$mpdf_default_config['fontDir']);
+
+		$mpdf_default_font_config = (new Mpdf\Config\FontVariables())->getDefaults();
+		$dkpdf_mpdf_font_data = apply_filters('dkpdf_mpdf_font_data',$mpdf_default_font_config['fontdata']);
+
+		// temp directory
+		$dkpdf_mpdf_temp_dir = apply_filters('dkpdf_mpdf_temp_dir',realpath( __DIR__ . '/..' ) . '/tmp');
+
 		$mpdf = new \Mpdf\Mpdf( [
-			'tempDir'           => realpath( __DIR__ . '/..' ) . '/tmp',
+			'tempDir'           => $dkpdf_mpdf_temp_dir,
 			'default_font_size' => $dkpdf_font_size,
 			'format'            => $format,
 			'margin_left'       => $dkpdf_margin_left,
@@ -102,6 +112,8 @@ function dkpdfg_output_pdf() {
 			'margin_top'        => $dkpdf_margin_top,
 			'margin_bottom'     => $dkpdf_margin_bottom,
 			'margin_header'     => $dkpdf_margin_header,
+			'fontDir'           => $dkpdf_mpdf_font_dir,
+			'fontdata'          => $dkpdf_mpdf_font_data,
 		] );
 	}
 
@@ -119,17 +131,16 @@ function dkpdfg_output_pdf() {
 		$mpdf->keepColumns = true;
 	}
 
-	// write cover
 	$dkpdf_show_cover = get_option( 'dkpdfg_show_cover', 'on' );
+	$dkpdf_show_toc = get_option( 'dkpdfg_show_toc', 'on' );
 
+	// write cover
 	if ( $dkpdf_show_cover == 'on' ) {
 		$pdf_cover = dkpdfg_get_template( 'dkpdfg-cover' );
 		$mpdf->WriteHTML( $pdf_cover );
 	}
 
 	// write TOC
-	$dkpdf_show_toc = get_option( 'dkpdfg_show_toc', 'on' );
-
 	if ( $dkpdf_show_toc == 'on' ) {
 
 		$toc_title = get_option( 'dkpdfg_toc_title', 'Table of contents' );
@@ -138,7 +149,9 @@ function dkpdfg_output_pdf() {
 		$mpdf->h2toc       = array( 'H1' => 0 );
 		$mpdf->h2bookmarks = array( 'H1' => 0 );
 
-	}
+	} else {
+		$mpdf->AddPage();
+    }
 
 	// header
 	$pdf_header_html = dkpdf_get_template( 'dkpdf-header' );
@@ -166,7 +179,6 @@ function dkpdfg_output_pdf() {
 		$mpdf->Output( 'dk-pdf-generator.pdf', 'D' );
 
 	}
-
 }
 
 /**
