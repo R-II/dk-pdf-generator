@@ -101,40 +101,17 @@ if ( ! class_exists( 'DKPDFG' ) ) {
 */
 function DKPDFG() {
 
-	return DKPDFG::instance();
+	if ( version_compare( phpversion(), '5.4.0', '<' ) ) {
 
+		require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		deactivate_plugins( '/dk-pdf-generator/dk-pdf-generator.php' );
+
+		wp_die(
+			'<p>' . 'DK PDF Generator can not be activated because it requires at least PHP version 5.4.0. ' . '</p>');
+	} else {
+
+		return DKPDFG::instance();
+	}
 }
 
 DKPDFG();
-
-/**
-* TODO add a better way for DK PDF plugin dependency
-* remove tgmp and use our custom logic (admin messages...)
-*/
-/*
-function dkpdfg_register_required_plugins() {
-
-	$plugins = array(
-		array(
-			'name'        => 'DK PDF',
-			'slug'      => 'dk-pdf',
-			'required'  => true,
-		),
-	);
-	$config = array(
-		'id'           => 'dkpdfg',
-		'default_path' => '',
-		'menu'         => 'tgmpa-install-plugins',
-		'parent_slug'  => 'plugins.php',
-		'capability'   => 'manage_options',
-		'has_notices'  => true,
-		'dismissable'  => true,
-		'dismiss_msg'  => '',
-		'is_automatic' => false,
-		'message'      => '',
-	);
-
-	tgmpa( $plugins, $config );
-}
-add_action( 'tgmpa_register', 'dkpdfg_register_required_plugins' );
-*/
