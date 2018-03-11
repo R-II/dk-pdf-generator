@@ -107,7 +107,9 @@ function DKPDFG() {
 		deactivate_plugins( '/dk-pdf-generator/dk-pdf-generator.php' );
 
 		wp_die(
-			'<p>' . 'DK PDF Generator can not be activated because it requires at least PHP version 5.4.0. ' . '</p>');
+			'<p>' . 'DK PDF Generator can not be activated because it requires at least PHP version 5.4.0. ' . '</p>'
+			. '<a href="' . admin_url( 'plugins.php' ) . '">' . esc_attr__( 'Back', 'dkpdf' ) . '</a>'
+		);
 	} else {
 
 		return DKPDFG::instance();
