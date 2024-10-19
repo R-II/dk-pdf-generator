@@ -2,10 +2,8 @@
 /*
   Plugin Name: DK PDF Generator
   Version: 1.5.0
-  Plugin URI: http://wp.dinamiko.com/demos/dkpdf-generator
   Description: Create PDF documents with your selected posts, pages and custom post types.
   Author: Emili Castells
-  Author URI: http://www.dinamiko.com
   Text Domain: dkpdfg
 */
 
@@ -13,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'DKPDFG' ) ) {
 
+    #[AllowDynamicProperties]
 	final class DKPDFG {
 
 		private static $instance;

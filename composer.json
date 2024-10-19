@@ -1,0 +1,23 @@
+{
+    "name": "dinamiko/dk-pdf-generator",
+    "require-dev": {
+        "mpdf/mpdf": "^8.2"
+    },
+    "extra": {
+        "mozart": {
+            "dep_namespace": "Dinamiko\\DKPDFG\\Vendor\\",
+            "dep_directory": "/lib/packages/",
+            "classmap_directory": "/lib/classes/",
+            "classmap_prefix": "DKPDFG_",
+            "packages": [
+                "mpdf/mpdf"
+            ],
+            "delete_vendor_directories": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Dinamiko\\DKPDFG\\Vendor\\": "lib/packages/"
+        }
+    }
+}

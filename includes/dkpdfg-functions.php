@@ -1,4 +1,8 @@
 <?php
+use Dinamiko\DKPDFG\Vendor\Mpdf\Config\ConfigVariables;
+use Dinamiko\DKPDFG\Vendor\Mpdf\Config\FontVariables;
+use Dinamiko\DKPDFG\Vendor\Mpdf\Mpdf;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -61,7 +65,7 @@ function dkpdfg_output_pdf() {
 		include( ABSPATH . '/wp-content/plugins/dk-pdf/includes/mpdf60/mpdf.php' );
 	} else {
 
-		require_once ABSPATH . '/wp-content/plugins/dk-pdf/vendor/autoload.php';
+        require_once  DKPDFG_PLUGIN_DIR . '/vendor/autoload.php';
 		define( '_MPDF_TTFONTDATAPATH', sys_get_temp_dir() . "/" );
 	}
 
@@ -94,16 +98,16 @@ function dkpdfg_output_pdf() {
 	} else {
 
 		// fonts
-		$mpdf_default_config = (new Mpdf\Config\ConfigVariables())->getDefaults();
+		$mpdf_default_config = (new ConfigVariables())->getDefaults();
 		$dkpdf_mpdf_font_dir = apply_filters('dkpdf_mpdf_font_dir',$mpdf_default_config['fontDir']);
 
-		$mpdf_default_font_config = (new Mpdf\Config\FontVariables())->getDefaults();
+		$mpdf_default_font_config = (new FontVariables())->getDefaults();
 		$dkpdf_mpdf_font_data = apply_filters('dkpdf_mpdf_font_data',$mpdf_default_font_config['fontdata']);
 
 		// temp directory
 		$dkpdf_mpdf_temp_dir = apply_filters('dkpdf_mpdf_temp_dir',realpath( __DIR__ . '/..' ) . '/tmp');
 
-		$mpdf = new \Mpdf\Mpdf( [
+		$mpdf = new Mpdf( [
 			'tempDir'           => $dkpdf_mpdf_temp_dir,
 			'default_font_size' => $dkpdf_font_size,
 			'format'            => $format,
