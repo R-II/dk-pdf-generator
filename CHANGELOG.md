@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.0
+- Add support for DK PDF 1.9.7+ and PHP 8+.
+
 ## 1.5.0
 - Add PDF button shortcode.
 - Add support for DK PDF 1.9.6.

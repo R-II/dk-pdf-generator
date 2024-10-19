@@ -1,11 +1,14 @@
 <?php
 /*
-  Plugin Name: DK PDF Generator
-  Version: 1.5.0
-  Description: Create PDF documents with your selected posts, pages and custom post types.
-  Author: Emili Castells
-  Text Domain: dkpdfg
-*/
+ * Plugin Name: DK PDF Generator
+ * Version: 1.6.0
+ * Description: Create PDF documents with your selected posts, pages and custom post types.
+ * Author: Emili Castells
+ * Requires PHP: 8.0
+ * Tested up to: 6.6
+ * License: MIT
+ * Text Domain: dkpdfg
+ */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
